@@ -4,6 +4,8 @@ import com.sashaq.dao.CompanyDao;
 import com.sashaq.entity.Company;
 import com.sashaq.service.UserService;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,14 +23,20 @@ public class CompanyDaoImpl implements CompanyDao {
 
     @Override
     public Company createCompany(Company company) {
-        jdbcTemplate.update("INSERT INTO company(name, address, phone, contact_user) VALUES (?,?,?,?)",
-                            company.getName(),
-                            company.getAddress(),
-                            company.getPhone(),
-                            company.getContactUser().getId());
+        SimpleJdbcInsert productInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("company")
+                .usingGeneratedKeyColumns("id");
+        Number key = productInsert.executeAndReturnKey(
+                new MapSqlParameterSource()
+                        .addValue("name", company.getName())
+                        .addValue("address", company.getAddress())
+                        .addValue("phone", company.getPhone())
+                        .addValue("contact_user", company.getContactUser().getId()));
 
-        return jdbcTemplate.queryForObject("SELECT id, name, address, phone, contact_user FROM company WHERE name = ?",
-                           new Object[]{company.getName()},
+        final Integer newId = key.intValue();
+
+        return jdbcTemplate.queryForObject("SELECT id, name, address, phone, contact_user FROM company WHERE id = ?",
+                           new Object[]{newId},
                            (rs, rowNum) ->
                                    new Company(rs.getInt("id"),
                                                rs.getString("name"),

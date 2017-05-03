@@ -3,6 +3,8 @@ package com.sashaq.dao.impl;
 import com.sashaq.dao.UserDao;
 import com.sashaq.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,12 +19,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        jdbcTemplate.update("INSERT INTO user(username, name, surname, email, password) VALUES (?,?,?,?,?)",
-                            user.getUsername(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword());
+        SimpleJdbcInsert productInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("user")
+                .usingGeneratedKeyColumns("id");
+        Number key = productInsert.executeAndReturnKey(
+                new MapSqlParameterSource()
+                        .addValue("username", user.getUsername())
+                        .addValue("name", user.getName())
+                        .addValue("surname", user.getSurname())
+                        .addValue("email", user.getEmail())
+                        .addValue("password", user.getPassword()));
+
+        final Integer newId = key.intValue();
 
         return jdbcTemplate.queryForObject(
-                "SELECT id, username, name, surname, email FROM user WHERE username = ?",
-                new Object[]{user.getUsername()},
+                "SELECT id, username, name, surname, email FROM user WHERE id = ?",
+                new Object[]{newId},
                 (rs, rowNum) -> new User(rs.getInt("id"),
                                          rs.getString("username"),
                                          rs.getString("name"),
