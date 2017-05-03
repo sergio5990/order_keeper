@@ -2,10 +2,14 @@ package com.sashaq.dao.impl;
 
 import com.sashaq.dao.ProductDao;
 import com.sashaq.entity.Product;
+import com.sashaq.entity.Shiptype;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Array;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,13 +25,25 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product create(Product product) {
-        jdbcTemplate.update("INSERT INTO product(name, description, price, quantity) VALUES (?,?,?,?)",
-                            product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
-        Integer newId = getIdByName(product.getName());
-        product.getShipTypes().forEach(item -> {
-            jdbcTemplate.update("INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
-                                newId, item);
-        });
+        SimpleJdbcInsert productInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("product")
+                .usingGeneratedKeyColumns("id");
+        Number key = productInsert.executeAndReturnKey(
+                new MapSqlParameterSource()
+                        .addValue("name", product.getName())
+                        .addValue("description", product.getDescription())
+                        .addValue("price", product.getPrice())
+                        .addValue("quantity", product.getQuantity()));
+
+        final Integer newId = key.intValue();
+
+        List<Object[]> collect = product.getShipTypes()
+                                        .stream()
+                                        .map(shipType -> new Object[]{newId, shipType.getId()})
+                                        .collect(Collectors.toList());
+
+        jdbcTemplate.batchUpdate("INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
+                                 collect);
         return getById(newId);
     }
 
@@ -44,32 +60,40 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> getAll() {
         return jdbcTemplate.query(
                 "SELECT id, name, description, price, quantity FROM product",
-                (rs, rowNum) -> {
-                    return new Product(rs.getInt(1),
-                                       rs.getString(2),
-                                       rs.getString(3),
-                                       rs.getFloat(4),
-                                       rs.getInt(5),
-                                       null
-                    );
-                }
+                (rs, rowNum) -> new Product(rs.getInt("id"),
+                                            rs.getString("name"),
+                                            rs.getString("description"),
+                                            rs.getFloat("price"),
+                                            rs.getInt("quantity"),
+                                            getShipTypesInProduct(rs.getInt("id"))
+                )
         );
     }
 
     @Override
     public Product getById(Integer productId) {
         return jdbcTemplate.queryForObject(
-                "SELECT pr.id, pr.name, pr.description, pr.price, pr.quantity FROM product pr WHERE pr.id = ?",
+                "SELECT id, name, description, price, quantity FROM product WHERE id = ?",
                 new Object[]{productId},
-                (rs, rowNum) -> {
-                    return new Product(rs.getInt(1),
-                                       rs.getString(2),
-                                       rs.getString(3),
-                                       rs.getFloat(4),
-                                       rs.getInt(5),
-                                       null
-                    );
-                }
+                (rs, rowNum) ->
+                        new Product(rs.getInt("id"),
+                                    rs.getString("name"),
+                                    rs.getString("description"),
+                                    rs.getFloat("price"),
+                                    rs.getInt("quantity"),
+                                    getShipTypesInProduct(rs.getInt("id"))
+                        )
+        );
+    }
+
+    @Override
+    public List<Shiptype> getShipTypesInProduct(Integer productId) {
+        return jdbcTemplate.query(
+                "SELECT ship_type_id FROM product_ship_type WHERE product_id = ?",
+                new Object[]{productId},
+                (rs, rowNum) -> new Shiptype(rs.getInt("ship_type_id"),
+                                             rs.getString("ship_type_id"),
+                                             rs.getFloat("ship_type_id"))
         );
     }
 
@@ -82,19 +106,23 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product addShipTypes(Integer productId, List<Integer> additionalShipTypes) {
-        additionalShipTypes.forEach(item -> {
-            jdbcTemplate.update("INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
-                                productId, item);
-        });
+        additionalShipTypes.forEach(item ->
+                                            jdbcTemplate.update(
+                                                    "INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
+                                                    productId,
+                                                    item)
+        );
         return getById(productId);
     }
 
     @Override
     public Product removeShipTypes(Integer productId, List<Integer> deductionShipTypes) {
-        deductionShipTypes.forEach(item -> {
-            jdbcTemplate.update("DELETE FROM product_ship_type WHERE product_id = ? AND ship_type_id = ?",
-                                productId, item);
-        });
+        deductionShipTypes.forEach(item ->
+                                           jdbcTemplate.update(
+                                                   "DELETE FROM product_ship_type WHERE product_id = ? AND ship_type_id = ?",
+                                                   productId,
+                                                   item)
+        );
         return getById(productId);
     }
 }

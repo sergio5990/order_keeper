@@ -1,6 +1,7 @@
 package com.sashaq.dao;
 
 import com.sashaq.entity.Product;
+import com.sashaq.entity.Shiptype;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface ProductDao {
     List<Product> getAll();
 
     Product getById(Integer productId);
+
+    List<Shiptype> getShipTypesInProduct(Integer productId);
 
     Product addQuantity(Integer productId, Integer additionalQuantity);
 

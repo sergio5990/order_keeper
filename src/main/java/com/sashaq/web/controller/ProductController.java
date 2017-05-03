@@ -29,7 +29,7 @@ public class ProductController {
                                                  .description(request.getDescription())
                                                  .price(request.getPrice())
                                                  .quantity(request.getQuantity())
-                                                 .shipTypes(request.getShipTypes())
+                                                 .shipTypes(request.mapShipTypes())
                                                  .build();
         return productService.create(newProduct);
     }

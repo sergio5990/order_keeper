@@ -10,13 +10,17 @@ public class Shiptype {
     private String name;
     private Float cost;
 
-    public Shiptype(){};
+    public Shiptype(){}
 
     public Shiptype(Integer id, String name, Float cost){
         this.id = id;
         this.name = name;
         this.cost = cost;
-    };
+    }
+
+    public Shiptype(Integer id) {
+        this.id = id;
+    }
 
 
 }
