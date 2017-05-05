@@ -1,13 +1,10 @@
 package com.sashaq.dao.impl;
 
 import com.sashaq.dao.AuthenticationDao;
-import com.sashaq.entity.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Repository
 public class AuthenticationDaoImpl implements AuthenticationDao {
@@ -27,7 +24,8 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
     }
 
     @Override
-    public String createToken(String token, Integer userId, LocalDateTime expireDate) {
+    public void saveOrUpdateToken(String token, Integer userId, LocalDateTime expireDate) {
+        //todo mb select before insert, if select empty then insert, if not empty then update expiration_date ???
         jdbcTemplate.update(
                 "INSERT INTO user_token(token, user_id, expiration_date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE token = ?, expiration_date = ?",
                 token,
@@ -35,10 +33,6 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
                 expireDate,
                 token,
                 expireDate);
-        return jdbcTemplate.queryForObject(
-                "SELECT token FROM user_token WHERE user_id = ?",
-                new Object[]{userId},
-                (rs, rowNum) -> rs.getString("token")
-        );
+
     }
 }

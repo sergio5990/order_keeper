@@ -34,7 +34,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         LocalDateTime expireDate = nowDate.plusWeeks(2);
 
         String token = tokenService.buildNewToken(username);
+        authenticationDao.saveOrUpdateToken(token, userId, expireDate);
 
-        return authenticationDao.createToken(token, userId, expireDate);
+        return token;
     }
 }

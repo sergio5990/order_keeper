@@ -1,23 +1,26 @@
-package com.sashaq.entity;
+package com.sashaq.security.entity;
 
+import com.sashaq.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
-/**
- * Created by SashaQ on 27.04.2017.
- */
 public class SecurityUser implements UserDetails {
-    private User user;
+    private final User user;
 
-    public SecurityUser(User user) {
+    public SecurityUser(final User user) {
         this.user = user;
+    }
+
+    public long getId() {
+        return user.getId();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
