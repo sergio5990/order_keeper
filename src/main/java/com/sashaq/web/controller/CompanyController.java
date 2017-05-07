@@ -3,7 +3,7 @@ package com.sashaq.web.controller;
 import com.sashaq.entity.Company;
 import com.sashaq.service.bean.CompanyService;
 import com.sashaq.service.bean.UserService;
-import com.sashaq.service.bean.impl.CompanyBuilder;
+import com.sashaq.service.builder.CompanyBuilder;
 import com.sashaq.web.rq.CreateCompanyRequest;
 import com.sashaq.web.rs.CompanyCreationResponse;
 import org.springframework.validation.annotation.Validated;

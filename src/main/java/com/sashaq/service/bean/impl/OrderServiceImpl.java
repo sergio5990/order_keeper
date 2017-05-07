@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
     private final ShipTypeService shipTypeService;
     private final OrderDao orderDao;
 
-    public OrderServiceImpl(ProductService productService, ShipTypeService shipTypeService, OrderDao orderDao) {
+    public OrderServiceImpl(final ProductService productService, final ShipTypeService shipTypeService, final OrderDao orderDao) {
         this.productService = productService;
         this.shipTypeService = shipTypeService;
         this.orderDao = orderDao;
@@ -27,7 +27,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order create(Order newOrder) {
+    //todo review
+    public Order save(Order newOrder) {
         Order createdOrder = orderDao.createOrder(newOrder);
 
         List<ProductInOrder> rawProducts = newOrder.getProductsInOrder();

@@ -12,13 +12,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(final UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
     @Transactional
-    public User create(User user) {
+    public User save(User user) {
         int userId = userDao.save(user);
 
         user.setId(userId);
@@ -51,5 +51,4 @@ public class UserServiceImpl implements UserService {
     public List<User> getUninvolvedUsers() {
         return userDao.getUninvolvedUsers();
     }
-
 }

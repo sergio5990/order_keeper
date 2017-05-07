@@ -21,7 +21,7 @@ public class ShipTypeController {
 
     @PostMapping("/create")
     public ShipType create(@Validated @RequestBody ShipTypeCreateRequest request) {
-        return shipTypeService.create(request.getName(), request.getCost());
+        return shipTypeService.save(request.getName(), request.getCost());
     }
 
     @PostMapping("/update")

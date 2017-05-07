@@ -5,7 +5,7 @@ import com.sashaq.entity.User;
 import java.util.List;
 
 public interface UserService {
-    User create(User user);
+    User save(User user);
 
     User getById(Integer userId);
 

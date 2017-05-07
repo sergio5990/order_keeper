@@ -12,13 +12,13 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao;
 
-    public ProductServiceImpl(ProductDao productDao) {
+    public ProductServiceImpl(final ProductDao productDao) {
         this.productDao = productDao;
     }
 
     @Override
     @Transactional
-    public Product create(Product product) {
+    public Product save(Product product) {
         return productDao.create(product);
     }
 

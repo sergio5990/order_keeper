@@ -18,7 +18,7 @@ public class ShipTypeServiceImpl implements ShipTypeService {
 
     @Override
     @Transactional
-    public ShipType create(String name, Float cost) {
+    public ShipType save(String name, Float cost) {
         int shipTypeId = shipTypeDao.save(name, cost);
 
         return new ShipType(shipTypeId, name, cost);

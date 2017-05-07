@@ -27,7 +27,7 @@ public class ProductController {
     public Product login(@Validated @RequestBody ProductCreateRequest request) {
         Product newProduct = ProductBuilder.fromRequest(request);
 
-        return productService.create(newProduct);
+        return productService.save(newProduct);
     }
 
     @GetMapping("/list")

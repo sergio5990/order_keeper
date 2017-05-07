@@ -28,7 +28,7 @@ public class UserController {
     public UserResponse createUser(@Validated @RequestBody UserRequest request) {
         User user = UserBuilder.buildFromRequest(request);
 
-        return new UserResponse(userService.create(user));
+        return new UserResponse(userService.save(user));
     }
 
     @GetMapping("/{userId}")

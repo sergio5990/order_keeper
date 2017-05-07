@@ -1,4 +1,4 @@
-package com.sashaq.service.bean.impl;
+package com.sashaq.service.builder;
 
 import com.sashaq.entity.Company;
 import com.sashaq.entity.User;

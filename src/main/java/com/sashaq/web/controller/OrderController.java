@@ -34,6 +34,6 @@ public class OrderController {
                                            .productsInOrder(productsInOrder)
                                            .build();
 
-        return new OrderCreationResponse(orderService.create(newOrder));
+        return new OrderCreationResponse(orderService.save(newOrder));
     }
 }

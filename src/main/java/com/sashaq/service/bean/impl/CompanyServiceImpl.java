@@ -13,7 +13,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyDao companyDao;
     private final UserService userService;
 
-    public CompanyServiceImpl(CompanyDao companyDao, UserService userService) {
+    public CompanyServiceImpl(final CompanyDao companyDao, final UserService userService) {
         this.companyDao = companyDao;
         this.userService = userService;
     }
@@ -35,7 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
         Integer userId = contactUser.getId();
 
         if (userId == null) {
-            contactUser = userService.create(contactUser);
+            contactUser = userService.save(contactUser);
         } else {
             contactUser = userService.getById(userId);
         }
