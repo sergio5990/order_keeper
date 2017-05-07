@@ -1,15 +1,18 @@
 package com.sashaq.web.controller;
 
 import com.sashaq.entity.User;
-import com.sashaq.exception.InvalidParameterException;
 import com.sashaq.service.bean.UserService;
 import com.sashaq.service.builder.UserBuilder;
 import com.sashaq.web.rq.UserRequest;
 import com.sashaq.web.rs.UserResponse;
+import com.sashaq.web.rs.common.ResultResponse;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.sashaq.core.util.constant.StringConstant.USER_ID;
 
 
 @RestController
@@ -21,33 +24,30 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping("/create")
     public UserResponse createUser(@Validated @RequestBody UserRequest request) {
-        User user = new UserBuilder().username(request.getUsername())
-                                     .name(request.getName())
-                                     .surname(request.getSurname())
-                                     .email(request.getEmail())
-                                     .password(request.getPassword())
-                                     .build();
+        User user = UserBuilder.buildFromRequest(request);
+
         return new UserResponse(userService.create(user));
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public UserResponse getUser(@PathVariable Integer userId) {
-        if (userId < 0) {
-            throw new InvalidParameterException("userId", userId);
-        }
+    @GetMapping("/{userId}")
+    public UserResponse getUser(@Validated @Range @PathVariable(USER_ID) Integer userId) {
+
         return new UserResponse(userService.getById(userId));
     }
 
-    @RequestMapping(value = "/getUninvolved", method = RequestMethod.GET)
+    @GetMapping("/getUninvolved")
     public List<User> getUninvolvedUsers() {
+
         return userService.getUninvolvedUsers();
     }
 
 
-    @RequestMapping(value = "/delete/{userId}", method = RequestMethod.DELETE)
-    public boolean deleteUser(@PathVariable Long userId) {
-        return userService.deleteById(userId);
+    @DeleteMapping("/delete/{userId}")
+    public ResultResponse deleteUser(@PathVariable(USER_ID) Long userId) {
+        boolean isDeleted = userService.deleteById(userId);
+
+        return ResultResponse.create(isDeleted);
     }
 }

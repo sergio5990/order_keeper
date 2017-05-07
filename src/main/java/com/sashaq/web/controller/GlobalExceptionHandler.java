@@ -3,7 +3,7 @@ package com.sashaq.web.controller;
 import com.sashaq.entity.ErrorCode;
 import com.sashaq.exception.BadCredentialException;
 import com.sashaq.exception.InvalidParameterException;
-import com.sashaq.web.rs.ErrorResponse;
+import com.sashaq.web.rs.common.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

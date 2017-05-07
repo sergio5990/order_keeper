@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.sashaq.core.util.constant.StringConstant.SHIP_TYPE_ID;
+
 @RestController
 @RequestMapping("/ship-type")
 public class ShipTypeController {
@@ -17,23 +19,26 @@ public class ShipTypeController {
         this.shipTypeService = shipTypeService;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping("/create")
     public ShipType create(@Validated @RequestBody ShipTypeCreateRequest request) {
         return shipTypeService.create(request.getName(), request.getCost());
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping("/update")
     public ShipType update(@RequestBody ShipType request) {
+
         return shipTypeService.update(request);
     }
 
-    @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET)
-    public ShipType getById(@PathVariable Integer userId) {
-        return shipTypeService.getById(userId);
+    @GetMapping("/{shipTypeId}")
+    public ShipType getById(@PathVariable(SHIP_TYPE_ID) Integer shipTypeId) {
+
+        return shipTypeService.getById(shipTypeId);
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public List<ShipType> getById() {
+    @GetMapping("/list")
+    public List<ShipType> getAll() {
+
         return shipTypeService.getAll();
     }
 }

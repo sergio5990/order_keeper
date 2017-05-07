@@ -1,4 +1,4 @@
-package com.sashaq.web.rs;
+package com.sashaq.web.rs.common;
 
 import com.sashaq.entity.ErrorCode;
 import lombok.Getter;
