@@ -1,16 +1,15 @@
 package com.sashaq.web.rs;
 
 import com.sashaq.entity.Company;
-import com.sashaq.entity.User;
 import lombok.Getter;
 
 @Getter
 public class CompanyCreationResponse {
-    private Integer id;
-    private String name;
-    private String address;
-    private String phone;
-    private UserResponse contactUser;
+    private final Integer id;
+    private final String name;
+    private final String address;
+    private final String phone;
+    private final UserResponse contactUser;
 
     public CompanyCreationResponse(Company company) {
         this.id = company.getId();

@@ -1,15 +1,13 @@
 package com.sashaq.web.rs;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class LoginResponse {
-    private UserResponse user;
-    private String token;
+    private final UserResponse user;
+    private final String token;
 
-    public LoginResponse(String token, UserResponse user){
+    public LoginResponse(final String token, final UserResponse user) {
         this.token = token;
         this.user = user;
     }

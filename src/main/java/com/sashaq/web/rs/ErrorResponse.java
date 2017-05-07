@@ -2,21 +2,19 @@ package com.sashaq.web.rs;
 
 import com.sashaq.entity.ErrorCode;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class ErrorResponse {
+    private final String message;
+    private final int errorCode;
 
-    private String message;
-    private Integer errorCode;
+    private ErrorResponse(final String message, final int errorCode) {
+        this.message = message;
+        this.errorCode = errorCode;
+    }
 
-    public static ErrorResponse withRequestError(String message, ErrorCode errorCode){
-        ErrorResponse errorResponse =  new ErrorResponse();
-        errorResponse.setErrorCode(errorCode.getCode());
-        errorResponse.setMessage(message);
-
-        return errorResponse;
-    };
+    public static ErrorResponse create(String message, ErrorCode errorCode){
+        return new ErrorResponse(message, errorCode.getCode());
+    }
 
 }
