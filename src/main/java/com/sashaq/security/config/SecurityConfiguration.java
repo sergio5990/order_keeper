@@ -40,7 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
         PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider = new PreAuthenticatedAuthenticationProvider();
-        preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
+        preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(
+                new UserDetailsByNameServiceWrapper<>(userDetailsService));
 
         return preAuthenticatedAuthenticationProvider;
     }
@@ -55,10 +56,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .addFilter(requestHeaderAuthenticationFilter()).authorizeRequests()
             .and()
-            .authorizeRequests().antMatchers("/user/**").authenticated()
+            .authorizeRequests().antMatchers("/user/create", "/auth/**").permitAll()
 
             .and()
-            .authorizeRequests().antMatchers("/**").permitAll();
+            .authorizeRequests().antMatchers("/**").authenticated();
         ;
     }
 }
