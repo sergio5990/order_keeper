@@ -1,20 +1,24 @@
 package com.sashaq.web.rq;
 
-import com.sashaq.entity.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 @Getter
 @Setter
 public class CreateCompanyRequest {
     @NotBlank
     private String name;
+
     @NotBlank
     private String address;
+
     @NotBlank
+    @Length(min = 5)
     private String phone;
-    //TODO Only ID or rest fields
-    // TODO UserRequest instead of User
-    private User contactUser;
+
+    @Range
+    private Integer contactUserId;
 }

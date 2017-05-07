@@ -5,20 +5,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Shiptype {
+public class ShipType {
     private Integer id;
     private String name;
     private Float cost;
 
-    public Shiptype(){}
+    public ShipType(){}
 
-    public Shiptype(Integer id, String name, Float cost){
+    public ShipType(Integer id, String name, Float cost){
         this.id = id;
         this.name = name;
         this.cost = cost;
     }
 
-    public Shiptype(Integer id) {
+    public ShipType(Integer id) {
         this.id = id;
     }
 
