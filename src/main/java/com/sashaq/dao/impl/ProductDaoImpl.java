@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.sashaq.core.util.constant.StringConstant.*;
+import static com.sashaq.dao.impl.ShipTypeDaoImpl.SHIP_TYPE_ROW_MAPPER;
 import static java.util.stream.Collectors.toList;
 
 @Repository
@@ -24,11 +25,7 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
 
     @Override
     public Product create(Product product) {
-        Number key = getSimpleInsert().executeAndReturnKey(
-                new MapSqlParameterSource().addValue(NAME, product.getName())
-                                           .addValue(DESCRIPTION, product.getDescription())
-                                           .addValue(PRICE, product.getPrice())
-                                           .addValue(QUANTITY, product.getQuantity()));
+        Number key = getSimpleInsert().executeAndReturnKey(createParameterSource(product));
 
         final Integer newId = key.intValue();
 
@@ -40,6 +37,13 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
         getJdbcTemplate().batchUpdate("INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
                                       collect);
         return getById(newId);
+    }
+
+    private static MapSqlParameterSource createParameterSource(final Product product) {
+        return new MapSqlParameterSource().addValue(NAME, product.getName())
+                                          .addValue(DESCRIPTION, product.getDescription())
+                                          .addValue(PRICE, product.getPrice())
+                                          .addValue(QUANTITY, product.getQuantity());
     }
 
     @Override
@@ -64,7 +68,7 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
         String sql = "SELECT p.id AS p_id, p.name AS p_name, p.description, p.price, p.quantity, t.id, t.name, t.cost FROM product p " +
                      "JOIN product_ship_type st ON p.id = st.product_id " +
                      "JOIN ship_type t ON st.ship_type_id = ship_type.id " +
-                     "where p.id = ?";
+                     "WHERE p.id = ?";
         List<Product> result = getJdbcTemplate().query(sql, params(productId), ProductShipTypeRowMapper.getInstance());
 
         if (CollectionUtils.isEmpty(result)) {
@@ -76,14 +80,12 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
 
     @Override
     public List<ShipType> getShipTypesInProduct(Integer productId) {
+        String sql = "SELECT st.id, st.name, st.cost FROM ship_type st " +
+                     "JOIN product_ship_type pst ON st.id = pst.ship_type_id AND pst.product_id = ?";
 
-        return getJdbcTemplate().query(
-                "SELECT ship_type_id FROM product_ship_type WHERE product_id = ?",
-                new Object[]{productId},
-                (rs, rowNum) -> new ShipType(rs.getInt("ship_type_id"),
-                                             rs.getString("ship_type_id"),
-                                             rs.getFloat("ship_type_id"))
-                                      );
+        return getJdbcTemplate().query(sql,
+                                       params(productId),
+                                       SHIP_TYPE_ROW_MAPPER);
     }
 
     @Override

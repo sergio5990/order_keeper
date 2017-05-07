@@ -13,9 +13,9 @@ import static com.sashaq.core.util.constant.StringConstant.*;
 
 @Repository
 public class ShipTypeDaoImpl extends BaseDao<ShipType> implements ShipTypeDao {
-    private static final RowMapper<ShipType> SHIP_TYPE_ROW_MAPPER = (rs, rowNum) -> new ShipType(rs.getInt(ID),
-                                                                                                 rs.getString(NAME),
-                                                                                                 rs.getFloat(COST));
+    static final RowMapper<ShipType> SHIP_TYPE_ROW_MAPPER = (rs, rowNum) -> new ShipType(rs.getInt(ID),
+                                                                                         rs.getString(NAME),
+                                                                                         rs.getFloat(COST));
 
     ShipTypeDaoImpl(final JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate, SHIP_TYPE);
