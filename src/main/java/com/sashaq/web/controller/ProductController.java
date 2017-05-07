@@ -5,7 +5,7 @@ import com.sashaq.service.ProductService;
 import com.sashaq.service.impl.ProductBuilder;
 import com.sashaq.web.rq.AddQuantityRequest;
 import com.sashaq.web.rq.ProductCreateRequest;
-import com.sashaq.web.rq.ShipTypeIdListRequest;
+import com.sashaq.web.rq.ShipTypeIdsRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +54,7 @@ public class ProductController {
 
     @RequestMapping(value = "/{productId}/add-ship-types", method = POST)
     public Product addShipTypes(@PathVariable Integer productId,
-                                @Validated @RequestBody ShipTypeIdListRequest request) {
+                                @Validated @RequestBody ShipTypeIdsRequest request) {
         productService.addShipTypes(productId, request.getShipTypeIds());
 
         return productService.getById(productId);
@@ -62,7 +62,7 @@ public class ProductController {
 
     @RequestMapping(value = "/{productId}/remove-ship-types", method = POST)
     public Product removeShipTypes(@PathVariable Integer productId,
-                                   @Validated @RequestBody ShipTypeIdListRequest request) {
+                                   @Validated @RequestBody ShipTypeIdsRequest request) {
         productService.removeShipTypes(productId, request.getShipTypeIds());
 
         return productService.getById(productId);
