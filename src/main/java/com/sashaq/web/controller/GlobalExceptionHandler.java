@@ -21,21 +21,21 @@ public class GlobalExceptionHandler {
 
         fieldError.getField();
         String message = exception.getMessage();
-        return ErrorResponse.withRequestError(fieldError.getDefaultMessage(),
-                                              ErrorCode.RequestError);
+        return ErrorResponse.create(fieldError.getDefaultMessage(),
+                                    ErrorCode.RequestError);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidParameterException.class)
     public ErrorResponse notValidRequest(InvalidParameterException exception) {
-        return ErrorResponse.withRequestError(exception.getFriendlyMessage(),
-                                              ErrorCode.RequestError);
+        return ErrorResponse.create(exception.getFriendlyMessage(),
+                                    ErrorCode.RequestError);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(BadCredentialException.class)
     public ErrorResponse notValidRequest(BadCredentialException exception) {
-        return ErrorResponse.withRequestError(exception.getFriendlyMessage(),
-                                              exception.getErrorCode());
+        return ErrorResponse.create(exception.getFriendlyMessage(),
+                                    exception.getErrorCode());
     }
 }
