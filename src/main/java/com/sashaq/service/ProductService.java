@@ -11,9 +11,9 @@ public interface ProductService {
 
     Product getById(Integer productId);
 
-    Product addQuantity(Integer productId, Integer additionalQuantity);
+    void addQuantity(Integer productId, Integer additionalQuantity);
 
-    Product addShipTypes(Integer productId, List<Integer> shipTypeIds);
+    void addShipTypes(Integer productId, List<Integer> shipTypeIds);
 
-    Product removeShipTypes(Integer productId, List<Integer> shipTypeIds);
+    void removeShipTypes(Integer productId, List<Integer> shipTypeIds);
 }

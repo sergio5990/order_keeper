@@ -13,13 +13,13 @@ public class Product {
     private String description;
     private Float price;
     private Integer quantity;
-    private List<Shiptype> shipTypes;
+    private List<ShipType> shipTypes;
 
     public Product(){
 
     }
 
-    public Product(Integer id, String name, String description, Float price, Integer quantity, List<Shiptype> shipTypes) {
+    public Product(Integer id, String name, String description, Float price, Integer quantity, List<ShipType> shipTypes) {
         this.id = id;
         this.name = name;
         this.description = description;

@@ -36,17 +36,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product addQuantity(Integer productId, Integer additionalQuantity) {
-        return productDao.addQuantity(productId, additionalQuantity);
+    public void addQuantity(Integer productId, Integer additionalQuantity) {
+         productDao.addQuantity(productId, additionalQuantity);
     }
 
     @Override
-    public Product addShipTypes(Integer productId, List<Integer> shipTypeIds) {
-        return productDao.addShipTypes(productId, shipTypeIds);
+    public void addShipTypes(Integer productId, List<Integer> shipTypeIds) {
+        productDao.addShipTypes(productId, shipTypeIds);
     }
 
     @Override
-    public Product removeShipTypes(Integer productId, List<Integer> shipTypeIds) {
-        return productDao.removeShipTypes(productId, shipTypeIds);
+    @Transactional
+    public void removeShipTypes(Integer productId, List<Integer> shipTypeIds) {
+        productDao.removeShipTypes(productId, shipTypeIds);
     }
 }

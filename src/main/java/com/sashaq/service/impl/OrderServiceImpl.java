@@ -4,7 +4,7 @@ import com.sashaq.dao.OrderDao;
 import com.sashaq.entity.Order;
 import com.sashaq.entity.Product;
 import com.sashaq.entity.ProductInOrder;
-import com.sashaq.entity.Shiptype;
+import com.sashaq.entity.ShipType;
 import com.sashaq.service.OrderService;
 import com.sashaq.service.ProductService;
 import com.sashaq.service.ShipTypeService;
@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
         List<ProductInOrder> rawProducts = newOrder.getProductsInOrder();
         rawProducts.forEach(rawProduct -> {
             Product fullProduct = productService.getById(rawProduct.getProductId());
-            Shiptype fullShipType = shipTypeService.getById(rawProduct.getShipTypeId());
+            ShipType fullShipType = shipTypeService.getById(rawProduct.getShipTypeId());
             rawProduct.setShipPrice(fullShipType.getCost());
             rawProduct.setProductPrice(fullProduct.getPrice());
             rawProduct.setOrderId(createdOrder.getId());

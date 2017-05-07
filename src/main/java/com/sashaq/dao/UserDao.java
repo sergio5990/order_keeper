@@ -5,7 +5,7 @@ import com.sashaq.entity.User;
 import java.util.List;
 
 public interface UserDao {
-    User create(User user);
+    int save(User user);
 
     User getById(Integer userId);
 

@@ -2,47 +2,30 @@ package com.sashaq.dao.impl;
 
 import com.sashaq.dao.CompanyDao;
 import com.sashaq.entity.Company;
-import com.sashaq.service.UserService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import static com.sashaq.core.util.constant.StringConstant.*;
 
 @Repository
-public class CompanyDaoImpl implements CompanyDao {
-    private final JdbcTemplate jdbcTemplate;
-    private final UserService userService;
+public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
-
-    public CompanyDaoImpl(JdbcTemplate jdbcTemplate, UserService userService) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.userService = userService;
+    public CompanyDaoImpl(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate, COMPANY);
     }
 
     @Override
-    public Company createCompany(Company company) {
-        SimpleJdbcInsert productInsert = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("company")
-                .usingGeneratedKeyColumns("id");
-        Number key = productInsert.executeAndReturnKey(
-                new MapSqlParameterSource()
-                        .addValue("name", company.getName())
-                        .addValue("address", company.getAddress())
-                        .addValue("phone", company.getPhone())
-                        .addValue("contact_user", company.getContactUser().getId()));
+    public int createCompany(Company company) {
+        Number key = simpleInsert.executeAndReturnKey(createParameterSource(company));
+        return key.intValue();
+    }
 
-        final Integer newId = key.intValue();
-
-        return jdbcTemplate.queryForObject("SELECT id, name, address, phone, contact_user FROM company WHERE id = ?",
-                           new Object[]{newId},
-                           (rs, rowNum) ->
-                                   new Company(rs.getInt("id"),
-                                               rs.getString("name"),
-                                               rs.getString("address"),
-                                               rs.getString("phone"),
-                                               userService.getById(rs.getInt("contact_user"))
-                                   ));
+    private static SqlParameterSource createParameterSource(final Company company) {
+        return new MapSqlParameterSource().addValue(NAME, company.getName())
+                                          .addValue(ADDRESS, company.getAddress())
+                                          .addValue(PHONE, company.getPhone())
+                                          .addValue(CONTACT_USER, company.getContactUser().getId());
     }
 }
