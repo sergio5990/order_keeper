@@ -1,7 +1,7 @@
 package com.sashaq.service.impl;
 
 import com.sashaq.entity.Product;
-import com.sashaq.entity.Shiptype;
+import com.sashaq.entity.ShipType;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class ProductBuilder {
     private String description;
     private Float price;
     private Integer quantity;
-    private List<Shiptype> shipTypes;
+    private List<ShipType> shipTypes;
 
     public ProductBuilder id(Integer id) {
         this.id = id;
@@ -38,7 +38,7 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder shipTypes(List<Shiptype> shipTypes) {
+    public ProductBuilder shipTypes(List<ShipType> shipTypes) {
         this.shipTypes = shipTypes;
         return this;
     }

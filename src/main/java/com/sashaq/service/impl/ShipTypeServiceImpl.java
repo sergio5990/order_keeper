@@ -1,7 +1,7 @@
 package com.sashaq.service.impl;
 
 import com.sashaq.dao.ShipTypeDao;
-import com.sashaq.entity.Shiptype;
+import com.sashaq.entity.ShipType;
 import com.sashaq.service.ShipTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,25 +18,29 @@ public class ShipTypeServiceImpl implements ShipTypeService {
 
     @Override
     @Transactional
-    public Shiptype create(String name, Float cost) {
-        return shipTypeDao.create(name, cost);
+    public ShipType create(String name, Float cost) {
+        int shipTypeId = shipTypeDao.save(name, cost);
+
+        return new ShipType(shipTypeId, name, cost);
     }
 
     @Override
     @Transactional
-    public Shiptype update(Integer id, String name, Float cost) {
-        return shipTypeDao.update(id, name, cost);
+    public ShipType update(final ShipType shipType) {
+        shipTypeDao.update(shipType.getId(), shipType.getName(), shipType.getCost());
+
+        return shipType;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Shiptype getById(Integer shipTypeId) {
+    public ShipType getById(Integer shipTypeId) {
         return shipTypeDao.getById(shipTypeId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Shiptype> getAll() {
+    public List<ShipType> getAll() {
         return shipTypeDao.getAll();
     }
 }

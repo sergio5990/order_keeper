@@ -1,15 +1,15 @@
 package com.sashaq.dao;
 
-import com.sashaq.entity.Shiptype;
+import com.sashaq.entity.ShipType;
 
 import java.util.List;
 
 public interface ShipTypeDao {
-    Shiptype create(String name, Float cost);
+    int save(String name, Float cost);
 
-    Shiptype update(Integer id, String name, Float cost);
+    int update(Integer id, String name, Float cost);
 
-    Shiptype getById(Integer shipTypeId);
+    ShipType getById(Integer shipTypeId);
 
-    List<Shiptype> getAll();
+    List<ShipType> getAll();
 }

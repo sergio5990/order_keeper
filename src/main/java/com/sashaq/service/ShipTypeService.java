@@ -1,15 +1,15 @@
 package com.sashaq.service;
 
-import com.sashaq.entity.Shiptype;
+import com.sashaq.entity.ShipType;
 
 import java.util.List;
 
 public interface ShipTypeService {
-    Shiptype create(String name, Float cost);
+    ShipType create(String name, Float cost);
 
-    Shiptype update(Integer id, String name, Float cost);
+    ShipType update(ShipType shipType);
 
-    Shiptype getById(Integer shipTypeId);
+    ShipType getById(Integer shipTypeId);
 
-    List<Shiptype> getAll();
+    List<ShipType> getAll();
 }

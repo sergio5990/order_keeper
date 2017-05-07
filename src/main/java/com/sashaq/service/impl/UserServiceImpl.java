@@ -19,7 +19,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User create(User user) {
-        return userDao.create(user);
+        int userId = userDao.save(user);
+
+        user.setId(userId);
+        user.setPassword(null);
+
+        return  user;
     }
 
     @Override
@@ -38,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean deleteById(Long userId) {
+        //todo delete tokens before delete user
         return 0 != userDao.deleteById(userId);
     }
 

@@ -21,13 +21,24 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public Company createCompany(Company company) {
+        User contactUser = getOrCreateUser(company);
+        company.setContactUser(contactUser);
+
+        int companyId = companyDao.createCompany(company);
+        company.setId(companyId);
+
+        return company;
+    }
+
+    private User getOrCreateUser(final Company company) {
         User contactUser = company.getContactUser();
-        if (contactUser.getId() == null) {
+        Integer userId = contactUser.getId();
+
+        if (userId == null) {
             contactUser = userService.create(contactUser);
         } else {
-            contactUser = userService.getById(contactUser.getId());
+            contactUser = userService.getById(userId);
         }
-        company.setContactUser(contactUser);
-        return companyDao.createCompany(company);
+        return contactUser;
     }
 }
