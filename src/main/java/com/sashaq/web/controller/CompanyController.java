@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/company")
 public class CompanyController {
     private final CompanyService companyService;
-    private UserService userService;
+    private final UserService userService;
 
-    public CompanyController(CompanyService companyService, UserService userService) {
+    public CompanyController(final CompanyService companyService, final UserService userService) {
         this.companyService = companyService;
         this.userService = userService;
     }

@@ -15,7 +15,7 @@ import static com.sashaq.core.util.constant.StringConstant.SHIP_TYPE_ID;
 public class ShipTypeController {
     private final ShipTypeService shipTypeService;
 
-    public ShipTypeController(ShipTypeService shipTypeService) {
+    public ShipTypeController(final ShipTypeService shipTypeService) {
         this.shipTypeService = shipTypeService;
     }
 

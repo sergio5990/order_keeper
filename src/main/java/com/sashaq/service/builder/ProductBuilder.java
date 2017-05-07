@@ -2,6 +2,7 @@ package com.sashaq.service.builder;
 
 import com.sashaq.entity.Product;
 import com.sashaq.entity.ShipType;
+import com.sashaq.web.rq.ProductCreateRequest;
 
 import java.util.List;
 
@@ -43,7 +44,16 @@ public class ProductBuilder {
         return this;
     }
 
-    public Product build(){
+    public Product build() {
         return new Product(id, name, description, price, quantity, shipTypes);
+    }
+
+    public static Product fromRequest(ProductCreateRequest request) {
+        return new ProductBuilder().name(request.getName())
+                                   .description(request.getDescription())
+                                   .price(request.getPrice())
+                                   .quantity(request.getQuantity())
+                                   .shipTypes(request.mapShipTypes())
+                                   .build();
     }
 }

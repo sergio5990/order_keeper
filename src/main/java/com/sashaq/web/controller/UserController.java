@@ -20,7 +20,7 @@ import static com.sashaq.core.util.constant.StringConstant.USER_ID;
 public class UserController {
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(final UserService userService) {
         this.userService = userService;
     }
 

@@ -25,5 +25,7 @@ public abstract class StringConstant {
     public static final String USER_ID ="userId";
     public static final String SHIP_TYPE_ID ="shipTypeId";
 
+    public static final String PRODUCT_ID ="productId";
+
     public static final String INVALID_TOKEN = "invalid token";
 }

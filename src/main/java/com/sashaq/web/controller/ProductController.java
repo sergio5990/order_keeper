@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static com.sashaq.core.util.constant.StringConstant.PRODUCT_ID;
 
 
 @RestController
@@ -19,49 +19,46 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class ProductController {
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(final ProductService productService) {
         this.productService = productService;
     }
 
-    @RequestMapping(value = "/create", method = POST)
+    @PostMapping("/create")
     public Product login(@Validated @RequestBody ProductCreateRequest request) {
-        Product newProduct = new ProductBuilder().name(request.getName())
-                                                 .description(request.getDescription())
-                                                 .price(request.getPrice())
-                                                 .quantity(request.getQuantity())
-                                                 .shipTypes(request.mapShipTypes())
-                                                 .build();
+        Product newProduct = ProductBuilder.fromRequest(request);
+
         return productService.create(newProduct);
     }
 
-    @RequestMapping(value = "/get", method = GET)
+    @GetMapping("/list")
     public List<Product> getAll() {
         return productService.getAll();
     }
 
-    @RequestMapping(value = "/{productId}", method = GET)
-    public Product getById(@PathVariable Integer productId) {
+    @GetMapping("/{productId}")
+    public Product getById(@PathVariable(PRODUCT_ID) Integer productId) {
+
         return productService.getById(productId);
     }
 
-    @RequestMapping(value = "/{productId}/add-quantity", method = POST)
-    public Product addQuantity(@PathVariable Integer productId,
+    @PostMapping("/{productId}/add-quantity")
+    public Product addQuantity(@PathVariable(PRODUCT_ID) Integer productId,
                                @Validated @RequestBody AddQuantityRequest request) {
         productService.addQuantity(productId, request.getAdditionalQuantity());
 
         return productService.getById(productId);
     }
 
-    @RequestMapping(value = "/{productId}/add-ship-types", method = POST)
-    public Product addShipTypes(@PathVariable Integer productId,
+    @PostMapping("/{productId}/add-ship-types")
+    public Product addShipTypes(@PathVariable(PRODUCT_ID) Integer productId,
                                 @Validated @RequestBody ShipTypeIdsRequest request) {
         productService.addShipTypes(productId, request.getShipTypeIds());
 
         return productService.getById(productId);
     }
 
-    @RequestMapping(value = "/{productId}/remove-ship-types", method = POST)
-    public Product removeShipTypes(@PathVariable Integer productId,
+    @PostMapping("/{productId}/remove-ship-types")
+    public Product removeShipTypes(@PathVariable(PRODUCT_ID) Integer productId,
                                    @Validated @RequestBody ShipTypeIdsRequest request) {
         productService.removeShipTypes(productId, request.getShipTypeIds());
 

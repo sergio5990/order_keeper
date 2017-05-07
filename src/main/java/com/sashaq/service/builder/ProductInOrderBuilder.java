@@ -1,6 +1,7 @@
 package com.sashaq.service.builder;
 
 import com.sashaq.entity.ProductInOrder;
+import com.sashaq.web.rq.CreateProductsInOrderRequest;
 
 public class ProductInOrderBuilder {
     private Integer id;
@@ -54,5 +55,12 @@ public class ProductInOrderBuilder {
                                   productPrice,
                                   productQantity,
                                   shipPrice);
+    }
+
+    public static ProductInOrder fromRequest(CreateProductsInOrderRequest request) {
+        return new ProductInOrderBuilder().productId(request.getProductId())
+                                          .shipTypeId(request.getShipTypeId())
+                                          .productQantity(request.getProductQantity())
+                                          .build();
     }
 }

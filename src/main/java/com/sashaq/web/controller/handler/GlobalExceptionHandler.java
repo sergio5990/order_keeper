@@ -1,4 +1,4 @@
-package com.sashaq.web.controller;
+package com.sashaq.web.controller.handler;
 
 import com.sashaq.entity.ErrorCode;
 import com.sashaq.exception.BadCredentialException;
