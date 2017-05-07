@@ -2,9 +2,9 @@ package com.sashaq.web.controller;
 
 import com.sashaq.entity.Order;
 import com.sashaq.entity.ProductInOrder;
-import com.sashaq.service.OrderService;
-import com.sashaq.service.impl.OrderBuilder;
-import com.sashaq.service.impl.ProductInOrderBuilder;
+import com.sashaq.service.bean.OrderService;
+import com.sashaq.service.builder.OrderBuilder;
+import com.sashaq.service.builder.ProductInOrderBuilder;
 import com.sashaq.web.rq.CreateOrderRequest;
 import com.sashaq.web.rs.OrderCreationResponse;
 import org.springframework.validation.annotation.Validated;

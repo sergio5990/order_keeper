@@ -3,7 +3,7 @@ package com.sashaq.security.service;
 
 import com.sashaq.security.entity.SecurityUser;
 import com.sashaq.entity.User;
-import com.sashaq.service.UserService;
+import com.sashaq.service.bean.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

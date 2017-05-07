@@ -1,8 +1,8 @@
 package com.sashaq.web.controller;
 
 import com.sashaq.entity.Product;
-import com.sashaq.service.ProductService;
-import com.sashaq.service.impl.ProductBuilder;
+import com.sashaq.service.bean.ProductService;
+import com.sashaq.service.builder.ProductBuilder;
 import com.sashaq.web.rq.AddQuantityRequest;
 import com.sashaq.web.rq.ProductCreateRequest;
 import com.sashaq.web.rq.ShipTypeIdsRequest;

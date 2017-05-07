@@ -1,8 +1,8 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.UserDao;
 import com.sashaq.entity.User;
-import com.sashaq.service.UserService;
+import com.sashaq.service.bean.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

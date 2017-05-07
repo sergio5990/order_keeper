@@ -1,6 +1,7 @@
 package com.sashaq.service.impl;
 
-import com.sashaq.service.TokenService;
+import com.sashaq.service.bean.TokenService;
+import com.sashaq.service.bean.impl.TokenServiceImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

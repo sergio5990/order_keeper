@@ -1,13 +1,13 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.OrderDao;
 import com.sashaq.entity.Order;
 import com.sashaq.entity.Product;
 import com.sashaq.entity.ProductInOrder;
 import com.sashaq.entity.ShipType;
-import com.sashaq.service.OrderService;
-import com.sashaq.service.ProductService;
-import com.sashaq.service.ShipTypeService;
+import com.sashaq.service.bean.OrderService;
+import com.sashaq.service.bean.ProductService;
+import com.sashaq.service.bean.ShipTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,8 +1,8 @@
 package com.sashaq.web.controller;
 
 import com.sashaq.entity.User;
-import com.sashaq.service.AuthenticationService;
-import com.sashaq.service.UserService;
+import com.sashaq.service.bean.AuthenticationService;
+import com.sashaq.service.bean.UserService;
 import com.sashaq.web.rq.LoginRequest;
 import com.sashaq.web.rs.LoginResponse;
 import com.sashaq.web.rs.UserResponse;

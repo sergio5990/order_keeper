@@ -2,8 +2,8 @@ package com.sashaq.web.controller;
 
 import com.sashaq.entity.User;
 import com.sashaq.exception.InvalidParameterException;
-import com.sashaq.service.UserService;
-import com.sashaq.service.impl.UserBuilder;
+import com.sashaq.service.bean.UserService;
+import com.sashaq.service.builder.UserBuilder;
 import com.sashaq.web.rq.UserRequest;
 import com.sashaq.web.rs.UserResponse;
 import org.springframework.validation.annotation.Validated;

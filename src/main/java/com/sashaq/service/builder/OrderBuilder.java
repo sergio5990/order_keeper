@@ -1,4 +1,4 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.builder;
 
 import com.sashaq.entity.Order;
 import com.sashaq.entity.ProductInOrder;

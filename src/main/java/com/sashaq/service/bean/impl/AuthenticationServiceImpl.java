@@ -1,9 +1,9 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.AuthenticationDao;
 import com.sashaq.exception.BadCredentialException;
-import com.sashaq.service.AuthenticationService;
-import com.sashaq.service.TokenService;
+import com.sashaq.service.bean.AuthenticationService;
+import com.sashaq.service.bean.TokenService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

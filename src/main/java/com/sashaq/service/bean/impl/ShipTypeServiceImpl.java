@@ -1,8 +1,8 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.ShipTypeDao;
 import com.sashaq.entity.ShipType;
-import com.sashaq.service.ShipTypeService;
+import com.sashaq.service.bean.ShipTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

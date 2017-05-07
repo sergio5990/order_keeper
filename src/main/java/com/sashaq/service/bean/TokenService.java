@@ -1,4 +1,4 @@
-package com.sashaq.service;
+package com.sashaq.service.bean;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

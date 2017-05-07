@@ -1,6 +1,6 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
-import com.sashaq.service.TokenService;
+import com.sashaq.service.bean.TokenService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

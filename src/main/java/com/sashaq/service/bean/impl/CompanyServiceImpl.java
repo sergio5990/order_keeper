@@ -1,10 +1,10 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.CompanyDao;
 import com.sashaq.entity.Company;
 import com.sashaq.entity.User;
-import com.sashaq.service.CompanyService;
-import com.sashaq.service.UserService;
+import com.sashaq.service.bean.CompanyService;
+import com.sashaq.service.bean.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

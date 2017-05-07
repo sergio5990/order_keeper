@@ -1,7 +1,7 @@
 package com.sashaq.web.controller;
 
 import com.sashaq.entity.ShipType;
-import com.sashaq.service.ShipTypeService;
+import com.sashaq.service.bean.ShipTypeService;
 import com.sashaq.web.rq.ShipTypeCreateRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
