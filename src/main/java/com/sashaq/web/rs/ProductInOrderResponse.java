@@ -1,32 +1,25 @@
 package com.sashaq.web.rs;
 
+import com.sashaq.entity.ProductInOrder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class ProductInOrderResponse {
-    private Integer id;
-    private Integer orderId;
-    private Integer productId;
-    private Integer shipTypeId;
-    private Float productPrice;
-    private Integer productQantity;
-    private Float shipPrice;
+    private final Integer id;
+    private final Integer orderId;
+    private final Integer productId;
+    private final Integer shipTypeId;
+    private final Float productPrice;
+    private final Integer productQantity;
+    private final Float shipPrice;
 
-    public ProductInOrderResponse(Integer id,
-                          Integer orderId,
-                          Integer productId,
-                          Integer shipTypeId,
-                          Float productPrice,
-                          Integer productQantity,
-                          Float shipPrice) {
-        this.id = id;
-        this.orderId = orderId;
-        this.productId = productId;
-        this.shipTypeId = shipTypeId;
-        this.productPrice = productPrice;
-        this.productQantity = productQantity;
-        this.shipPrice = shipPrice;
+    public ProductInOrderResponse(final ProductInOrder product) {
+        this.id = product.getId();
+        this.orderId = product.getOrderId();
+        this.productId = product.getProductId();
+        this.shipTypeId = product.getShipTypeId();
+        this.productPrice = product.getProductPrice();
+        this.productQantity = product.getProductQantity();
+        this.shipPrice = product.getShipPrice();
     }
 }

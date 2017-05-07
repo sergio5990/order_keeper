@@ -11,7 +11,7 @@ public class CompanyCreationResponse {
     private final String phone;
     private final UserResponse contactUser;
 
-    public CompanyCreationResponse(Company company) {
+    public CompanyCreationResponse(final Company company) {
         this.id = company.getId();
         this.name = company.getName();
         this.address = company.getAddress();
