@@ -24,21 +24,20 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order createOrder(Order newOrder) {
         SimpleJdbcInsert productInsert = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("order")
+                .withTableName("customer_order")
                 .usingGeneratedKeyColumns("id");
-        // TODO fix date issue
         Number key = productInsert.executeAndReturnKey(
                 new MapSqlParameterSource()
                         .addValue("creator_id", newOrder.getCreatorId())
-                        .addValue("creation_date", LocalDateTime.now(), Types.TIMESTAMP));
+                        .addValue("creation_date", LocalDateTime.now()));
         final Integer newId = key.intValue();
 
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM \"order\" WHERE id = ?",
+                "SELECT * FROM customer_order WHERE id = ?",
                 new Object[]{newId},
                 (rs, rowNum) -> new Order(rs.getInt("id"),
                                           rs.getInt("creator_id"),
-                                          LocalDateTime.parse(rs.getString("creation_date")),
+                                          rs.getTimestamp("creation_date").toLocalDateTime(),
                                           null
                 )
         );

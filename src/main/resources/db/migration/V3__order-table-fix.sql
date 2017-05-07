@@ -1,0 +1,1 @@
+ALTER TABLE order_keeper_db.`order` RENAME TO order_keeper_db.customer_order;
