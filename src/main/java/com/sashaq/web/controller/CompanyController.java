@@ -2,6 +2,7 @@ package com.sashaq.web.controller;
 
 import com.sashaq.entity.Company;
 import com.sashaq.service.CompanyService;
+import com.sashaq.service.UserService;
 import com.sashaq.service.impl.CompanyBuilder;
 import com.sashaq.web.rq.CreateCompanyRequest;
 import com.sashaq.web.rs.CompanyCreationResponse;
@@ -15,18 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/company")
 public class CompanyController {
     private final CompanyService companyService;
+    private UserService userService;
 
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, UserService userService) {
         this.companyService = companyService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CompanyCreationResponse createCompany(@Validated @RequestBody CreateCompanyRequest request) {
-        Company company = new CompanyBuilder().name(request.getName())
-                                              .address(request.getAddress())
-                                              .phone(request.getPhone())
-                                              .contactUser(request.getContactUser())
-                                              .build();
+        Company company = new CompanyBuilder(userService).name(request.getName())
+                                                         .address(request.getAddress())
+                                                         .phone(request.getPhone())
+                                                         .contactUser(request.getContactUserId())
+                                                         .build();
 
         return new CompanyCreationResponse(companyService.createCompany(company));
     }
