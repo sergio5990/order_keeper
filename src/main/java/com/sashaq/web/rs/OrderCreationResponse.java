@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 public class OrderCreationResponse {
     private Integer id;
     private Integer creatorId;
-    private Timestamp creationDate;
+    private LocalDateTime creationDate;
     private List<ProductInOrderResponse> productsInOrder;
 
     public OrderCreationResponse(Integer id, Integer creatorId, LocalDateTime creationDate, List<ProductInOrder> productsInOrder) {
         this.id = id;
         this.creatorId = creatorId;
-        this.creationDate = Timestamp.valueOf(creationDate);
+        this.creationDate = creationDate;
         this.productsInOrder = productsInOrder.stream()
                                               .map(productInOrder -> new ProductInOrderResponse(
                                                       productInOrder.getId(),
@@ -39,7 +39,7 @@ public class OrderCreationResponse {
     public OrderCreationResponse(Order order) {
         this.id = order.getId();
         this.creatorId = order.getCreatorId();
-        this.creationDate = Timestamp.valueOf(order.getCreationDate());
+        this.creationDate = order.getCreationDate();
         this.productsInOrder = order.getProductsInOrder().stream()
                                               .map(productInOrder -> new ProductInOrderResponse(
                                                            productInOrder.getId(),
