@@ -15,19 +15,19 @@ public class AuthenticationDaoImpl extends BaseDao<User> implements Authenticati
 
     @Override
     public Integer canLogin(String username, String password) {
-        return jdbcTemplate.queryForObject("SELECT id FROM user WHERE username = ? AND password = ?",
-                                           params(username, password),
-                                           Integer.class);
+        return getJdbcTemplate().queryForObject("SELECT id FROM user WHERE username = ? AND password = ?",
+                                                params(username, password),
+                                                Integer.class);
     }
 
     @Override
     public void saveOrUpdateToken(String token, Integer userId, LocalDateTime expireDate) {
-        jdbcTemplate.update(
-                "INSERT INTO user_token(token, user_id, expiration_date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE token = ?, expiration_date = ?",
-                token,
-                userId,
-                expireDate,
-                token,
-                expireDate);
+        String sql = "INSERT INTO user_token(token, user_id, expiration_date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE token = ?, expiration_date = ?";
+        getJdbcTemplate().update(sql,
+                                 token,
+                                 userId,
+                                 expireDate,
+                                 token,
+                                 expireDate);
     }
 }

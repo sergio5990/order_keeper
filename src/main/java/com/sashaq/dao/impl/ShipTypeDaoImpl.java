@@ -23,27 +23,27 @@ public class ShipTypeDaoImpl extends BaseDao<ShipType> implements ShipTypeDao {
 
     @Override
     public int save(String name, Float cost) {
-        Number key = simpleInsert.executeAndReturnKey(new MapSqlParameterSource().addValue(NAME, name)
-                                                                                 .addValue(COST, cost));
+        Number key = getSimpleInsert().executeAndReturnKey(new MapSqlParameterSource().addValue(NAME, name)
+                                                                                      .addValue(COST, cost));
 
         return key.intValue();
     }
 
     @Override
     public int update(Integer id, String name, Float cost) {
-        return jdbcTemplate.update("UPDATE ship_type SET name = ?, cost = ? WHERE id = ?",
-                                   name, cost, id);
+        return getJdbcTemplate().update("UPDATE ship_type SET name = ?, cost = ? WHERE id = ?",
+                                        name, cost, id);
     }
 
     @Override
     public ShipType getById(Integer shipTypeId) {
-        return jdbcTemplate.queryForObject("SELECT * FROM ship_type WHERE id = ?",
-                                           params(shipTypeId),
-                                           SHIP_TYPE_ROW_MAPPER);
+        return getJdbcTemplate().queryForObject("SELECT * FROM ship_type WHERE id = ?",
+                                                params(shipTypeId),
+                                                SHIP_TYPE_ROW_MAPPER);
     }
 
     @Override
     public List<ShipType> getAll() {
-        return jdbcTemplate.query("SELECT * FROM ship_type", SHIP_TYPE_ROW_MAPPER);
+        return getJdbcTemplate().query("SELECT * FROM ship_type", SHIP_TYPE_ROW_MAPPER);
     }
 }

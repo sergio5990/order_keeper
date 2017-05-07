@@ -24,7 +24,7 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
 
     @Override
     public Product create(Product product) {
-        Number key = simpleInsert.executeAndReturnKey(
+        Number key = getSimpleInsert().executeAndReturnKey(
                 new MapSqlParameterSource().addValue(NAME, product.getName())
                                            .addValue(DESCRIPTION, product.getDescription())
                                            .addValue(PRICE, product.getPrice())
@@ -37,16 +37,16 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
                                         .map(shipType -> new Object[]{newId, shipType.getId()})
                                         .collect(toList());
 
-        jdbcTemplate.batchUpdate("INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
-                                 collect);
+        getJdbcTemplate().batchUpdate("INSERT INTO product_ship_type(product_id, ship_type_id) VALUES (?,?)",
+                                      collect);
         return getById(newId);
     }
 
     @Override
     public Integer getIdByName(String name) {
-        return jdbcTemplate.queryForObject("SELECT id FROM product WHERE name = ?",
-                                           params(name),
-                                           Integer.class);
+        return getJdbcTemplate().queryForObject("SELECT id FROM product WHERE name = ?",
+                                                params(name),
+                                                Integer.class);
 
     }
 
@@ -56,7 +56,7 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
                      "JOIN product_ship_type st ON p.id = st.product_id " +
                      "JOIN ship_type t ON st.ship_type_id = ship_type.id";
 
-        return jdbcTemplate.query(sql, ProductShipTypeRowMapper.getInstance());
+        return getJdbcTemplate().query(sql, ProductShipTypeRowMapper.getInstance());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
                      "JOIN product_ship_type st ON p.id = st.product_id " +
                      "JOIN ship_type t ON st.ship_type_id = ship_type.id " +
                      "where p.id = ?";
-        List<Product> result = jdbcTemplate.query(sql, params(productId), ProductShipTypeRowMapper.getInstance());
+        List<Product> result = getJdbcTemplate().query(sql, params(productId), ProductShipTypeRowMapper.getInstance());
 
         if (CollectionUtils.isEmpty(result)) {
             throw new EmptyResultDataAccessException(1);
@@ -77,32 +77,32 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
     @Override
     public List<ShipType> getShipTypesInProduct(Integer productId) {
 
-        return jdbcTemplate.query(
+        return getJdbcTemplate().query(
                 "SELECT ship_type_id FROM product_ship_type WHERE product_id = ?",
                 new Object[]{productId},
                 (rs, rowNum) -> new ShipType(rs.getInt("ship_type_id"),
                                              rs.getString("ship_type_id"),
                                              rs.getFloat("ship_type_id"))
-                                 );
+                                      );
     }
 
     @Override
     public void addQuantity(Integer productId, Integer additionalQuantity) {
-        jdbcTemplate.update("UPDATE product SET quantity = quantity + ? WHERE id = ?",
-                            additionalQuantity,
-                            productId);
+        getJdbcTemplate().update("UPDATE product SET quantity = quantity + ? WHERE id = ?",
+                                 additionalQuantity,
+                                 productId);
 
     }
 
     @Override
     public void addShipTypes(Integer productId, List<Integer> additionalShipTypes) {
-        jdbcTemplate.batchUpdate("INSERT INTO product_ship_type (product_id, ship_type_id) VALUES (?,?)",
-                                 batchParams(productId, additionalShipTypes));
+        getJdbcTemplate().batchUpdate("INSERT INTO product_ship_type (product_id, ship_type_id) VALUES (?,?)",
+                                      batchParams(productId, additionalShipTypes));
     }
 
     @Override
     public void removeShipTypes(Integer productId, List<Integer> deductionShipTypes) {
-        jdbcTemplate.batchUpdate("DELETE FROM product_ship_type WHERE product_id = ? AND ship_type_id = ?",
-                                 batchParams(productId, deductionShipTypes));
+        getJdbcTemplate().batchUpdate("DELETE FROM product_ship_type WHERE product_id = ? AND ship_type_id = ?",
+                                      batchParams(productId, deductionShipTypes));
     }
 }
