@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 public class CreateOrderRequest {
     private Integer creatorId;
-    private List<CreateOrderInProductsRequest> productsInOrder;
+    private List<CreateProductsInOrderRequest> productsInOrder;
 }

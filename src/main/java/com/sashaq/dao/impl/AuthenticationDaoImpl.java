@@ -25,7 +25,6 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
 
     @Override
     public void saveOrUpdateToken(String token, Integer userId, LocalDateTime expireDate) {
-        //todo mb select before insert, if select empty then insert, if not empty then update expiration_date ???
         jdbcTemplate.update(
                 "INSERT INTO user_token(token, user_id, expiration_date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE token = ?, expiration_date = ?",
                 token,
@@ -33,6 +32,5 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
                 expireDate,
                 token,
                 expireDate);
-
     }
 }

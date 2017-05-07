@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateOrderInProductsRequest {
-    private Integer id;
-    private Integer orderId;
+public class CreateProductsInOrderRequest {
     private Integer productId;
     private Integer shipTypeId;
     private Integer productQantity;
