@@ -2,8 +2,10 @@ package com.sashaq.entity;
 
 
 public enum ErrorCode {
-    RequestError(4000),
-    BadCredentialError(4001);
+    BAD_REQUEST(4000),
+    BAD_CREDENTIAL(4001),
+
+    UNKNOWN_ERROR(5000);
 
     private int code;
 

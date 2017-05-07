@@ -9,7 +9,7 @@ public class InvalidParameterException  extends BusinessException{
     private int value;
 
     public InvalidParameterException(String parameter, Integer value) {
-        super("invalid parameter: " + parameter, ErrorCode.RequestError);
+        super("invalid parameter: " + parameter, ErrorCode.BAD_REQUEST);
         this.parameter = parameter;
         this.value = value;
     }
