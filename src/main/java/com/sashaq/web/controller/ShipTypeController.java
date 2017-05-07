@@ -1,6 +1,6 @@
 package com.sashaq.web.controller;
 
-import com.sashaq.entity.Shiptype;
+import com.sashaq.entity.ShipType;
 import com.sashaq.service.ShipTypeService;
 import com.sashaq.web.rq.ShipTypeCreateRequest;
 import org.springframework.validation.annotation.Validated;
@@ -18,22 +18,22 @@ public class ShipTypeController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Shiptype create(@Validated @RequestBody ShipTypeCreateRequest request) {
+    public ShipType create(@Validated @RequestBody ShipTypeCreateRequest request) {
         return shipTypeService.create(request.getName(), request.getCost());
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Shiptype update(@Validated @RequestBody Shiptype request) {
-        return shipTypeService.update(request.getId(), request.getName(), request.getCost());
+    public ShipType update(@RequestBody ShipType request) {
+        return shipTypeService.update(request);
     }
 
     @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET)
-    public Shiptype getById(@PathVariable Integer userId) {
+    public ShipType getById(@PathVariable Integer userId) {
         return shipTypeService.getById(userId);
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public List<Shiptype> getById() {
+    public List<ShipType> getById() {
         return shipTypeService.getAll();
     }
 }
