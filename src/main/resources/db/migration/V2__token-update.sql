@@ -1,0 +1,1 @@
+ALTER TABLE order_keeper_db.user_token MODIFY token VARCHAR(511) NOT NULL;
