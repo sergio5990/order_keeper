@@ -10,8 +10,8 @@ import static com.sashaq.core.util.constant.StringConstant.ID;
 import static java.util.stream.Collectors.toList;
 
 class BaseDao<T> {
-    final JdbcTemplate jdbcTemplate;
-    final SimpleJdbcInsert simpleInsert;
+    private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert simpleInsert;
 
     BaseDao(final JdbcTemplate jdbcTemplate, final String tableName) {
         this.jdbcTemplate = jdbcTemplate;
@@ -21,7 +21,7 @@ class BaseDao<T> {
 
     BaseDao(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.simpleInsert = null; //todo not good
+        this.simpleInsert = null;
     }
 
     static Object[] params(Object... params) {
@@ -32,5 +32,17 @@ class BaseDao<T> {
         return values.stream()
                      .map(o -> new Object[]{duplicateValue, o})
                      .collect(toList());
+    }
+
+    JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
+
+    SimpleJdbcInsert getSimpleInsert() {
+        if (simpleInsert != null) {
+            return simpleInsert;
+        } else {
+            throw new UnsupportedOperationException("insert is not allowed");
+        }
     }
 }

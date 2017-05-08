@@ -1,6 +1,7 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.builder;
 
 import com.sashaq.entity.User;
+import com.sashaq.web.rq.UserRequest;
 
 public class UserBuilder {
     private Integer id;
@@ -40,8 +41,17 @@ public class UserBuilder {
         return this;
     }
 
-    public User build(){
+    public User build() {
         return new User(id, username, name, surname, email, password);
+    }
+
+    public static User buildFromRequest(UserRequest request) {
+        return new UserBuilder().username(request.getUsername())
+                                .name(request.getName())
+                                .surname(request.getSurname())
+                                .email(request.getEmail())
+                                .password(request.getPassword())
+                                .build();
     }
 
 }

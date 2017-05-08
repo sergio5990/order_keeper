@@ -1,8 +1,8 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.builder;
 
 import com.sashaq.entity.Company;
 import com.sashaq.entity.User;
-import com.sashaq.service.UserService;
+import com.sashaq.service.bean.UserService;
 
 public class CompanyBuilder {
     private Integer id;

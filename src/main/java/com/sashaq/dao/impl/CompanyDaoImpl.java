@@ -18,7 +18,7 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     @Override
     public int createCompany(Company company) {
-        Number key = simpleInsert.executeAndReturnKey(createParameterSource(company));
+        Number key = getSimpleInsert().executeAndReturnKey(createParameterSource(company));
         return key.intValue();
     }
 

@@ -1,6 +1,5 @@
 package com.sashaq.entity;
 
-import com.sashaq.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 

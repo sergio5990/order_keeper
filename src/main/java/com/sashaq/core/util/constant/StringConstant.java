@@ -10,7 +10,11 @@ public abstract class StringConstant {
     public static final String PASSWORD = "password";
 
     public static final String SHIP_TYPE = "ship_type";
-    public static final String COST = "COST";
+    public static final String CUSTOMER_ORDER = "customer_order";
+    public static final String CREATOR_ID = "creator_id";
+    public static final String CREATION_DATE = "creation_date";
+
+    public static final String COST = "cost";
 
     public static final String COMPANY = "company";
     public static final String ADDRESS = "address";
@@ -21,6 +25,11 @@ public abstract class StringConstant {
     public static final String DESCRIPTION = "description";
     public static final String PRICE = "price";
     public static final String QUANTITY = "quantity";
+
+    public static final String USER_ID ="userId";
+    public static final String SHIP_TYPE_ID ="shipTypeId";
+
+    public static final String PRODUCT_ID ="productId";
 
     public static final String INVALID_TOKEN = "invalid token";
 }

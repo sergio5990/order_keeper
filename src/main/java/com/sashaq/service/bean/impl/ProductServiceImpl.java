@@ -1,8 +1,8 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.ProductDao;
 import com.sashaq.entity.Product;
-import com.sashaq.service.ProductService;
+import com.sashaq.service.bean.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,13 +12,13 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao;
 
-    public ProductServiceImpl(ProductDao productDao) {
+    public ProductServiceImpl(final ProductDao productDao) {
         this.productDao = productDao;
     }
 
     @Override
     @Transactional
-    public Product create(Product product) {
+    public Product save(Product product) {
         return productDao.create(product);
     }
 

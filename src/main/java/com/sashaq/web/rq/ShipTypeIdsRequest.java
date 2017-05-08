@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ShipTypeIdListRequest {
+public class ShipTypeIdsRequest {
     @NotEmpty
     private List<Integer> shipTypeIds;
 }

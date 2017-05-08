@@ -1,13 +1,13 @@
-package com.sashaq.service.impl;
+package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.OrderDao;
 import com.sashaq.entity.Order;
 import com.sashaq.entity.Product;
 import com.sashaq.entity.ProductInOrder;
 import com.sashaq.entity.ShipType;
-import com.sashaq.service.OrderService;
-import com.sashaq.service.ProductService;
-import com.sashaq.service.ShipTypeService;
+import com.sashaq.service.bean.OrderService;
+import com.sashaq.service.bean.ProductService;
+import com.sashaq.service.bean.ShipTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
     private final ShipTypeService shipTypeService;
     private final OrderDao orderDao;
 
-    public OrderServiceImpl(ProductService productService, ShipTypeService shipTypeService, OrderDao orderDao) {
+    public OrderServiceImpl(final ProductService productService, final ShipTypeService shipTypeService, final OrderDao orderDao) {
         this.productService = productService;
         this.shipTypeService = shipTypeService;
         this.orderDao = orderDao;
@@ -27,7 +27,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order create(Order newOrder) {
+    //todo review
+    public Order save(Order newOrder) {
         Order createdOrder = orderDao.createOrder(newOrder);
 
         List<ProductInOrder> rawProducts = newOrder.getProductsInOrder();

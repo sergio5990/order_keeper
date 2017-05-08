@@ -2,16 +2,13 @@ package com.sashaq.web.controller;
 
 import com.sashaq.entity.Order;
 import com.sashaq.entity.ProductInOrder;
-import com.sashaq.service.OrderService;
-import com.sashaq.service.impl.OrderBuilder;
-import com.sashaq.service.impl.ProductInOrderBuilder;
+import com.sashaq.service.bean.OrderService;
+import com.sashaq.service.builder.OrderBuilder;
+import com.sashaq.service.builder.ProductInOrderBuilder;
 import com.sashaq.web.rq.CreateOrderRequest;
 import com.sashaq.web.rs.OrderCreationResponse;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,21 +18,15 @@ import java.util.stream.Collectors;
 public class OrderController {
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(final OrderService orderService) {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping("/create")
     public OrderCreationResponse createOrder(@Validated @RequestBody CreateOrderRequest request) {
         List<ProductInOrder> productsInOrder = request.getProductsInOrder()
                                                       .stream()
-                                                      .map(productInOrder ->
-                                                                   new ProductInOrderBuilder()
-                                                                           .productId(productInOrder.getProductId())
-                                                                           .shipTypeId(productInOrder.getShipTypeId())
-                                                                           .productQantity(productInOrder.getProductQantity())
-                                                                           .build()
-                                                      )
+                                                      .map(ProductInOrderBuilder::fromRequest)
                                                       .collect(Collectors.toList());
 
         Order newOrder = new OrderBuilder().creatorId(request.getCreatorId())
@@ -43,6 +34,6 @@ public class OrderController {
                                            .productsInOrder(productsInOrder)
                                            .build();
 
-        return new OrderCreationResponse(orderService.create(newOrder));
+        return new OrderCreationResponse(orderService.save(newOrder));
     }
 }

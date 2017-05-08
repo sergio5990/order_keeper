@@ -27,7 +27,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public int save(User user) {
-        Number key = simpleInsert.executeAndReturnKey(createParameterSource(user));
+        Number key = getSimpleInsert().executeAndReturnKey(createParameterSource(user));
 
         return key.intValue();
     }
@@ -42,22 +42,22 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
     @Override
     public User getById(Integer userId) {
-        return jdbcTemplate.queryForObject("SELECT id, username, name, surname, email FROM user WHERE id = ?",
-                                           params(userId),
-                                           USER_ROW_MAPPER);
+        return getJdbcTemplate().queryForObject("SELECT id, username, name, surname, email FROM user WHERE id = ?",
+                                                params(userId),
+                                                USER_ROW_MAPPER);
     }
 
     @Override
     public User getByToken(String userToken) {
         String sql = "SELECT u.id, u.username, u.name, u.surname, u.email FROM user u JOIN user_token ut ON u.id = ut.user_id WHERE ut.token = ?";
-        return jdbcTemplate.queryForObject(sql,
-                                           params(userToken),
-                                           USER_ROW_MAPPER);
+        return getJdbcTemplate().queryForObject(sql,
+                                                params(userToken),
+                                                USER_ROW_MAPPER);
     }
 
     @Override
     public int deleteById(Long userId) {
-        return jdbcTemplate.update("DELETE FROM user WHERE id = ?", userId);
+        return getJdbcTemplate().update("DELETE FROM user WHERE id = ?", userId);
     }
 
     @Override
