@@ -19,5 +19,5 @@ public class CreateProductsInOrderRequest {
 
     @NotNull
     @Range
-    private Integer productQantity;
+    private Integer productQuantity;
 }

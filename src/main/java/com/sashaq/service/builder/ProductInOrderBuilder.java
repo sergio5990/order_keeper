@@ -9,7 +9,7 @@ public class ProductInOrderBuilder {
     private Integer productId;
     private Integer shipTypeId;
     private Float productPrice;
-    private Integer productQantity;
+    private Integer productQuantity;
     private Float shipPrice;
 
     public ProductInOrderBuilder id(Integer id) {
@@ -37,8 +37,8 @@ public class ProductInOrderBuilder {
         return this;
     }
 
-    public ProductInOrderBuilder productQantity(Integer productQantity) {
-        this.productQantity = productQantity;
+    public ProductInOrderBuilder productQuantity(Integer productQuantity) {
+        this.productQuantity = productQuantity;
         return this;
     }
 
@@ -53,14 +53,14 @@ public class ProductInOrderBuilder {
                                   productId,
                                   shipTypeId,
                                   productPrice,
-                                  productQantity,
+                                  productQuantity,
                                   shipPrice);
     }
 
     public static ProductInOrder fromRequest(CreateProductsInOrderRequest request) {
         return new ProductInOrderBuilder().productId(request.getProductId())
                                           .shipTypeId(request.getShipTypeId())
-                                          .productQantity(request.getProductQantity())
+                                          .productQuantity(request.getProductQuantity())
                                           .build();
     }
 }

@@ -68,7 +68,7 @@ public class OrderDaoImpl extends BaseDao<CustomerOrder> implements OrderDao {
                             p.getProductId(),
                             p.getShipTypeId(),
                             p.getProductPrice(),
-                            p.getProductQantity(),
+                            p.getProductQuantity(),
                             p.getShipPrice()};
     }
 }
