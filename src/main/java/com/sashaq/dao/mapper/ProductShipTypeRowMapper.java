@@ -28,7 +28,7 @@ public class ProductShipTypeRowMapper implements ResultSetExtractor<List<Product
     public List<Product> extractData(final ResultSet rs) throws SQLException {
         Map<Integer, Product> productById = new HashMap<>();
         while (rs.next()) {
-            int productId = rs.getInt(ID);
+            int productId = rs.getInt(P_ID);
             Product product = productById.get(productId);
             if (product == null) {
                 product = createProduct(rs);
