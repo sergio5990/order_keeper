@@ -8,13 +8,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Order {
+public class CustomerOrder {
     private Integer id;
     private Integer creatorId;
     private LocalDateTime creationDate;
     private List<ProductInOrder> productsInOrder;
 
-    public Order(Integer id, Integer creatorId, LocalDateTime creationDate, List<ProductInOrder> productsInOrder) {
+    public CustomerOrder(Integer id, Integer creatorId, LocalDateTime creationDate, List<ProductInOrder> productsInOrder) {
         this.id = id;
         this.creatorId = creatorId;
         this.creationDate = creationDate;

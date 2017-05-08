@@ -1,6 +1,6 @@
 package com.sashaq.web.controller;
 
-import com.sashaq.entity.Order;
+import com.sashaq.entity.CustomerOrder;
 import com.sashaq.entity.ProductInOrder;
 import com.sashaq.service.bean.OrderService;
 import com.sashaq.service.builder.OrderBuilder;
@@ -29,11 +29,11 @@ public class OrderController {
                                                       .map(ProductInOrderBuilder::fromRequest)
                                                       .collect(Collectors.toList());
 
-        Order newOrder = new OrderBuilder().creatorId(request.getCreatorId())
-                                           .creationDateIsNow()
-                                           .productsInOrder(productsInOrder)
-                                           .build();
+        CustomerOrder newCustomerOrder = new OrderBuilder().creatorId(request.getCreatorId())
+                                                           .creationDateIsNow()
+                                                           .productsInOrder(productsInOrder)
+                                                           .build();
 
-        return new OrderCreationResponse(orderService.save(newOrder));
+        return new OrderCreationResponse(orderService.save(newCustomerOrder));
     }
 }

@@ -1,7 +1,7 @@
 package com.sashaq.service.bean;
 
-import com.sashaq.entity.Order;
+import com.sashaq.entity.CustomerOrder;
 
 public interface OrderService {
-    Order save(Order newOrder);
+    CustomerOrder save(CustomerOrder newCustomerOrder);
 }

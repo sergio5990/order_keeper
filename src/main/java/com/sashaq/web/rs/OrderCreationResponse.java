@@ -1,6 +1,6 @@
 package com.sashaq.web.rs;
 
-import com.sashaq.entity.Order;
+import com.sashaq.entity.CustomerOrder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,13 +17,13 @@ public class OrderCreationResponse {
     private LocalDateTime creationDate;
     private List<ProductInOrderResponse> productsInOrder;
 
-    public OrderCreationResponse(final Order order) {
-        this.id = order.getId();
-        this.creatorId = order.getCreatorId();
-        this.creationDate = order.getCreationDate();
-        this.productsInOrder = order.getProductsInOrder()
-                                    .stream()
-                                    .map(ProductInOrderResponse::new)
-                                    .collect(toList());
+    public OrderCreationResponse(final CustomerOrder customerOrder) {
+        this.id = customerOrder.getId();
+        this.creatorId = customerOrder.getCreatorId();
+        this.creationDate = customerOrder.getCreationDate();
+        this.productsInOrder = customerOrder.getProductsInOrder()
+                                            .stream()
+                                            .map(ProductInOrderResponse::new)
+                                            .collect(toList());
     }
 }

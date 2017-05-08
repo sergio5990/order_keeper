@@ -1,7 +1,7 @@
 package com.sashaq.service.bean.impl;
 
 import com.sashaq.dao.OrderDao;
-import com.sashaq.entity.Order;
+import com.sashaq.entity.CustomerOrder;
 import com.sashaq.entity.Product;
 import com.sashaq.entity.ProductInOrder;
 import com.sashaq.entity.ShipType;
@@ -28,21 +28,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     //todo review
-    public Order save(Order newOrder) {
-        Order createdOrder = orderDao.createOrder(newOrder);
+    public CustomerOrder save(CustomerOrder newCustomerOrder) {
+        CustomerOrder createdCustomerOrder = orderDao.createOrder(newCustomerOrder);
 
-        List<ProductInOrder> rawProducts = newOrder.getProductsInOrder();
+        List<ProductInOrder> rawProducts = newCustomerOrder.getProductsInOrder();
         rawProducts.forEach(rawProduct -> {
             Product fullProduct = productService.getById(rawProduct.getProductId());
             ShipType fullShipType = shipTypeService.getById(rawProduct.getShipTypeId());
             rawProduct.setShipPrice(fullShipType.getCost());
             rawProduct.setProductPrice(fullProduct.getPrice());
-            rawProduct.setOrderId(createdOrder.getId());
+            rawProduct.setOrderId(createdCustomerOrder.getId());
         });
 
         List<ProductInOrder> addedProducts = orderDao.addProductsInOrder(rawProducts);
-        createdOrder.setProductsInOrder(addedProducts);
+        createdCustomerOrder.setProductsInOrder(addedProducts);
 
-        return createdOrder;
+        return createdCustomerOrder;
     }
 }

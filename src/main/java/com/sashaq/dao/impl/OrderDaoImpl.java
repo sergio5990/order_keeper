@@ -1,7 +1,7 @@
 package com.sashaq.dao.impl;
 
 import com.sashaq.dao.OrderDao;
-import com.sashaq.entity.Order;
+import com.sashaq.entity.CustomerOrder;
 import com.sashaq.entity.ProductInOrder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,19 +15,19 @@ import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
 
 @Repository
-public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
-    private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, rowNum) -> new Order(rs.getInt(ID),
-                                                                                       rs.getInt(CREATOR_ID),
-                                                                                       rs.getTimestamp(CREATION_DATE).toLocalDateTime(),
-                                                                                       null);
+public class OrderDaoImpl extends BaseDao<CustomerOrder> implements OrderDao {
+    private static final RowMapper<CustomerOrder> ORDER_ROW_MAPPER = (rs, rowNum) -> new CustomerOrder(rs.getInt(ID),
+                                                                                                       rs.getInt(CREATOR_ID),
+                                                                                                       rs.getTimestamp(CREATION_DATE).toLocalDateTime(),
+                                                                                                       null);
 
     public OrderDaoImpl(final JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate, CUSTOMER_ORDER);
     }
 
     @Override
-    public Order createOrder(Order newOrder) {
-        Number key = getSimpleInsert().executeAndReturnKey(createParameterSource(newOrder));
+    public CustomerOrder createOrder(CustomerOrder newCustomerOrder) {
+        Number key = getSimpleInsert().executeAndReturnKey(createParameterSource(newCustomerOrder));
         final Integer newId = key.intValue();
 
         return getJdbcTemplate().queryForObject("SELECT * FROM customer_order WHERE id = ?",
@@ -35,8 +35,8 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
                                                 ORDER_ROW_MAPPER);
     }
 
-    private static MapSqlParameterSource createParameterSource(final Order newOrder) {
-        return new MapSqlParameterSource().addValue(CREATOR_ID, newOrder.getCreatorId())
+    private static MapSqlParameterSource createParameterSource(final CustomerOrder newCustomerOrder) {
+        return new MapSqlParameterSource().addValue(CREATOR_ID, newCustomerOrder.getCreatorId())
                                           .addValue(CREATION_DATE, now());
     }
 

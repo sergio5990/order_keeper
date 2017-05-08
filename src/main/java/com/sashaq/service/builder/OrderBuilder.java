@@ -1,6 +1,6 @@
 package com.sashaq.service.builder;
 
-import com.sashaq.entity.Order;
+import com.sashaq.entity.CustomerOrder;
 import com.sashaq.entity.ProductInOrder;
 
 import java.time.LocalDateTime;
@@ -37,8 +37,8 @@ public class OrderBuilder {
         return this;
     }
 
-    public Order build() {
-        return new Order(id, creatorId, creationDate, productsInOrder);
+    public CustomerOrder build() {
+        return new CustomerOrder(id, creatorId, creationDate, productsInOrder);
     }
 
 }
