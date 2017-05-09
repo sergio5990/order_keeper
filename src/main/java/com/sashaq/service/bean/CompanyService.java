@@ -4,4 +4,6 @@ import com.sashaq.entity.Company;
 
 public interface CompanyService {
     Company createCompany(Company company);
+
+    Company getCompanyByUserId(Integer userId);
 }

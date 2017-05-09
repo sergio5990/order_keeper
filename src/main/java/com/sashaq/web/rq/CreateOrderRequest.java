@@ -12,10 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CreateOrderRequest {
-    @NotNull
-    @Range
-    private Integer creatorId;
-
     @NotEmpty
     @Valid
     private List<CreateProductsInOrderRequest> productsInOrder;

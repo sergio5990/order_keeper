@@ -67,7 +67,7 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
     public Product getById(Integer productId) {
         String sql = "SELECT p.id AS p_id, p.name AS p_name, p.description, p.price, p.quantity, t.id, t.name, t.cost FROM product p " +
                      "JOIN product_ship_type st ON p.id = st.product_id " +
-                     "JOIN ship_type t ON st.ship_type_id = ship_type.id " +
+                     "JOIN ship_type t ON st.ship_type_id = t.id " +
                      "WHERE p.id = ?";
         List<Product> result = getJdbcTemplate().query(sql, params(productId), ProductShipTypeRowMapper.getInstance());
 

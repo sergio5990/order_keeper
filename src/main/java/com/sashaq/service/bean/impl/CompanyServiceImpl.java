@@ -30,6 +30,11 @@ public class CompanyServiceImpl implements CompanyService {
         return company;
     }
 
+    @Override
+    public Company getCompanyByUserId(Integer userId) {
+        return companyDao.getCompanyByUserId(userId);
+    }
+
     private User getOrCreateUser(final Company company) {
         User contactUser = company.getContactUser();
         Integer userId = contactUser.getId();
