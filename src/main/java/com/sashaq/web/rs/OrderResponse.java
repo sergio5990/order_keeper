@@ -11,13 +11,13 @@ import static java.util.stream.Collectors.toList;
 
 @Getter
 @Setter
-public class OrderCreationResponse {
+public class OrderResponse {
     private Integer id;
     private Integer creatorId;
     private LocalDateTime creationDate;
     private List<ProductInOrderResponse> productsInOrder;
 
-    public OrderCreationResponse(final CustomerOrder customerOrder) {
+    public OrderResponse(final CustomerOrder customerOrder) {
         this.id = customerOrder.getId();
         this.creatorId = customerOrder.getCreatorId();
         this.creationDate = customerOrder.getCreationDate();

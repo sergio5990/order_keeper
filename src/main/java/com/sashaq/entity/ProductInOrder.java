@@ -8,23 +8,23 @@ import lombok.Setter;
 public class ProductInOrder {
     private Integer id;
     private Integer orderId;
-    private Integer productId;
-    private Integer shipTypeId;
+    private Product product;
+    private ShipType shipType;
     private Float productPrice;
     private Integer productQuantity;
     private Float shipPrice;
 
     public ProductInOrder(Integer id,
                           Integer orderId,
-                          Integer productId,
-                          Integer shipTypeId,
+                          Product product,
+                          ShipType shipType,
                           Float productPrice,
                           Integer productQuantity,
                           Float shipPrice) {
         this.id = id;
         this.orderId = orderId;
-        this.productId = productId;
-        this.shipTypeId = shipTypeId;
+        this.product = product;
+        this.shipType = shipType;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
         this.shipPrice = shipPrice;

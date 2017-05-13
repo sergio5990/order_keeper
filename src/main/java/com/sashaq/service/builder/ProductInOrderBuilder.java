@@ -1,13 +1,15 @@
 package com.sashaq.service.builder;
 
+import com.sashaq.entity.Product;
 import com.sashaq.entity.ProductInOrder;
+import com.sashaq.entity.ShipType;
 import com.sashaq.web.rq.CreateProductsInOrderRequest;
 
 public class ProductInOrderBuilder {
     private Integer id;
     private Integer orderId;
-    private Integer productId;
-    private Integer shipTypeId;
+    private Product product;
+    private ShipType shipType;
     private Float productPrice;
     private Integer productQuantity;
     private Float shipPrice;
@@ -22,13 +24,23 @@ public class ProductInOrderBuilder {
         return this;
     }
 
-    public ProductInOrderBuilder productId(Integer productId) {
-        this.productId = productId;
+    public ProductInOrderBuilder product(Integer productId) {
+        this.product = new Product(productId);
         return this;
     }
 
-    public ProductInOrderBuilder shipTypeId(Integer shipTypeId) {
-        this.shipTypeId = shipTypeId;
+    public ProductInOrderBuilder product(Product product) {
+        this.product = product;
+        return this;
+    }
+
+    public ProductInOrderBuilder shipType(Integer shipTypeId) {
+        this.shipType = new ShipType(shipTypeId);
+        return this;
+    }
+
+    public ProductInOrderBuilder shipType(ShipType shipType) {
+        this.shipType = shipType;
         return this;
     }
 
@@ -50,16 +62,16 @@ public class ProductInOrderBuilder {
     public ProductInOrder build() {
         return new ProductInOrder(id,
                                   orderId,
-                                  productId,
-                                  shipTypeId,
+                                  product,
+                                  shipType,
                                   productPrice,
                                   productQuantity,
                                   shipPrice);
     }
 
     public static ProductInOrder fromRequest(CreateProductsInOrderRequest request) {
-        return new ProductInOrderBuilder().productId(request.getProductId())
-                                          .shipTypeId(request.getShipTypeId())
+        return new ProductInOrderBuilder().product(request.getProductId())
+                                          .shipType(request.getShipTypeId())
                                           .productQuantity(request.getProductQuantity())
                                           .build();
     }

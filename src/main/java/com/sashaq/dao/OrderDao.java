@@ -9,4 +9,8 @@ public interface OrderDao {
     CustomerOrder createOrder(CustomerOrder newCustomerOrder);
 
     List<ProductInOrder> addProductsInOrder(List<ProductInOrder> rawProducts);
+
+    List<ProductInOrder> getProductsInOrder(Integer orderId);
+
+    List<CustomerOrder> getCompanyOrders(Integer companyId);
 }

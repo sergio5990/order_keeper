@@ -27,4 +27,14 @@ public class Product {
         this.quantity = quantity;
         this.shipTypes = shipTypes;
     }
+
+    public Product(Integer id) {
+        this.id = id;
+    }
+
+    public Product(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

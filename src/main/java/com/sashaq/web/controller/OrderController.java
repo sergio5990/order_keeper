@@ -9,7 +9,7 @@ import com.sashaq.service.bean.OrderService;
 import com.sashaq.service.builder.OrderBuilder;
 import com.sashaq.service.builder.ProductInOrderBuilder;
 import com.sashaq.web.rq.CreateOrderRequest;
-import com.sashaq.web.rs.OrderCreationResponse;
+import com.sashaq.web.rs.OrderResponse;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.toIntExact;
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/order")
@@ -31,8 +32,8 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public OrderCreationResponse createOrder(@Validated @RequestBody CreateOrderRequest request,
-                                             @AuthenticationPrincipal SecurityUser activeUser) {
+    public OrderResponse createOrder(@Validated @RequestBody CreateOrderRequest request,
+                                     @AuthenticationPrincipal SecurityUser activeUser) {
         List<ProductInOrder> productsInOrder = request.getProductsInOrder()
                                                       .stream()
                                                       .map(ProductInOrderBuilder::fromRequest)
@@ -44,6 +45,17 @@ public class OrderController {
                                                            .productsInOrder(productsInOrder)
                                                            .build();
 
-        return new OrderCreationResponse(orderService.save(newCustomerOrder));
+        return new OrderResponse(orderService.save(newCustomerOrder));
+    }
+
+    @GetMapping("/get-company-orders")
+    public List<OrderResponse> getCompanyOrders(@AuthenticationPrincipal SecurityUser activeUser) {
+
+        Company companyId = companyService.getCompanyByUserId(toIntExact(activeUser.getId()));
+
+        return orderService.getCompanyOrders(companyId.getId())
+                           .stream()
+                           .map(OrderResponse::new)
+                           .collect(toList());
     }
 }
