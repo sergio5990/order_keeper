@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.toIntExact;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -39,7 +38,7 @@ public class OrderController {
                                                       .map(ProductInOrderBuilder::fromRequest)
                                                       .collect(Collectors.toList());
 
-        Company companyId = companyService.getCompanyByUserId(toIntExact(activeUser.getId()));
+        Company companyId = companyService.getCompanyByUserId(activeUser.getId());
         CustomerOrder newCustomerOrder = new OrderBuilder().creatorId(companyId.getId())
                                                            .creationDateIsNow()
                                                            .productsInOrder(productsInOrder)
@@ -51,7 +50,7 @@ public class OrderController {
     @GetMapping("/get-company-orders")
     public List<OrderResponse> getCompanyOrders(@AuthenticationPrincipal SecurityUser activeUser) {
 
-        Company companyId = companyService.getCompanyByUserId(toIntExact(activeUser.getId()));
+        Company companyId = companyService.getCompanyByUserId(activeUser.getId());
 
         return orderService.getCompanyOrders(companyId.getId())
                            .stream()
